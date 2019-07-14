@@ -74,12 +74,8 @@ $out .= $killLink;
 <head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Live input record and playback</title>
-  <style type='text/css'>
-    ul { list-style: none; }
-    #recordingslist audio { display: block; margin-bottom: 10px; }
-  </style>
-
+	<title>Disturbatron 2019</title>
+ 
   
 
 </head>
