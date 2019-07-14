@@ -56,3 +56,18 @@ body
 {
 	background:#f8f8f8; 
 }
+
+
+a:link {
+	color:#1C77AC;
+	text-decoration:none;
+
+}
+a:visited {
+	color:#1C77AC
+
+}
+a:hover{
+	color:#AC771C;
+
+}
