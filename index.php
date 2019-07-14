@@ -10,15 +10,6 @@ $path = "";
 if($_REQUEST && $_REQUEST["path"]) {
 	$path = $_REQUEST["path"];
 }
-//echo $file . "*";
-
-if($_REQUEST && $_REQUEST["mode"]) {
-	$mode = $_REQUEST["mode"];
-	if($mode=="kill") {
-		$command = escapeshellcmd('sudo service apache2 restart');
-		passthru($command);
-	}
-}
 
 $iconWidth = 20;
 $basePath = 'audio';
@@ -41,7 +32,8 @@ if(strpos($dir, "..") !== false) {
 $files = scandir($dir);
 $parentPath = join("/", array_pop(explode("/", $dir)));
 $out = ""; 
-$out .= "<div  ><div style='display:inline-block'><h4>Pick a file to play:</h4></div><div style='display:inline-block;margin-left:80px'>" . $killLink . "</div></div>";
+//i could also do this via AJAX but that's too much trouble:
+$out .= "<div><div style='display:inline-block'><h4>Pick a file to play:</h4></div><div style='display:inline-block;margin-left:80px'>" . $killLink . "</div></div>";
 $out .= "<table class='resultsTable' id='sounds'>\n";
 $out .= "<thead><tr><th ><a href='javascript: SortTable(\"sounds\", 0)'>file</a></th><th>play</th><th>test</th><th><a href='javascript: SortTable(\"sounds\", 3)'>modified</a></th><th><a href='javascript: SortTable(\"sounds\", 4)'>size</a></th><th>tasks</th></tr></thead>\n";
 if($includeNavUp) {
@@ -75,9 +67,6 @@ $out .= $killLink;
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Disturbatron 2019</title>
- 
-  
-
 </head>
 <body>
 
@@ -164,6 +153,8 @@ $out .= $killLink;
 		reader.onloadend = function() {
 			base64data =  btoa(reader.result);                
 			//console.log(base64data);
+			//i found the base64data was corrupted at the server because '+' had been converted to ' ' and '/' may have also been corrupted
+			//so i've replaced those with ^ and ~, which don't get changed.  they are changed back on the server before the base64data is unencoded
 			oReq.send("blob=" + base64data.split('/').join('~').split('+').join('^'));
 		}
     });
