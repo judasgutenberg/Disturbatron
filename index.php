@@ -82,192 +82,192 @@ $out .= $killLink;
   <pre id="log"></pre>
  </div>
  <script>
-  function __log(e, data) {
-    log.innerHTML += "\n" + e + " " + (data || '');
-  }
+function __log(e, data) {
+	log.innerHTML += "\n" + e + " " + (data || '');
+}
 
-  var audio_context;
-  var recorder;
+var audio_context;
+var recorder;
 
-  function startUserMedia(stream) {
-    window.input2 = audio_context.createMediaStreamSource(stream);
-    __log('Media stream created.');
+function startUserMedia(stream) {
+  window.input2 = audio_context.createMediaStreamSource(stream);
+  __log('Media stream created.');
 
-    // Uncomment if you want the audio to feedback directly
-    //input.connect(audio_context.destination);
-    //__log('Input connected to audio context destination.');
-    
-    recorder = new Recorder(window.input2);
-    __log('Recorder initialised.');
-  }
-
-  function startRecording(button) {
-    recorder && recorder.record();
-    button.disabled = true;
-    button.nextElementSibling.disabled = false;
-    __log('Recording...');
-  }
-
-  function stopRecording(button) {
-    recorder && recorder.stop();
-    button.disabled = true;
-    button.previousElementSibling.disabled = false;
-    __log('Stopped recording.');
-    
-    // create WAV download link using audio data blob
-    createDownloadLink();
-    
-    recorder.clear();
-  }
-
-  function createDownloadLink() {
-	recorder && recorder.exportWAV(function(blob) {
-		var url = URL.createObjectURL(blob);
-		var li = document.createElement('li');
-		var au = document.createElement('audio');
-		var hf = document.createElement('a');
-		
-		au.controls = true;
-		au.src = url;
-		hf.href = url;
-		hf.download = new Date().toISOString() + '.wav';
-		hf.innerHTML = hf.download;
-		li.appendChild(au);
-		li.appendChild(hf);
-		recordingslist.appendChild(li);
-		
-		var oReq = new XMLHttpRequest();
-		var ajaxUrl = "play.php?file=" + encodeURI(hf.download);
-		oReq.open("POST", ajaxUrl, true);
-		oReq.onload = function (oEvent) {
-		 // Uploaded.
-		 //alert('woot');
-		};
-		//i guess we already have a blob;
-		//var blob = new Blob(['abc123'], {type: 'text/plain'});
-		oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	 	//oReq.setRequestHeader('Content-type', 'text/plain');
-		var reader = new FileReader();
-		//alert(url);
-		reader.readAsBinaryString(blob); 
-		reader.onloadend = function() {
-			base64data =  btoa(reader.result);                
-			//console.log(base64data);
-			//i found the base64data was corrupted at the server because '+' had been converted to ' ' and '/' may have also been corrupted
-			//so i've replaced those with ^ and ~, which don't get changed.  they are changed back on the server before the base64data is unencoded
-			oReq.send("blob=" + base64data.split('/').join('~').split('+').join('^'));
-		}
-    });
-  }
+  // Uncomment if you want the audio to feedback directly
+  //input.connect(audio_context.destination);
+  //__log('Input connected to audio context destination.');
   
-	function renameFile(filename) {
-		let newNameDiv = document.getElementById('newName');
-		document.getElementById('oldFileName').value = filename;
-		newNameDiv.style.display = '';
+  recorder = new Recorder(window.input2);
+  __log('Recorder initialised.');
+}
 
-	}
+function startRecording(button) {
+  recorder && recorder.record();
+  button.disabled = true;
+  button.nextElementSibling.disabled = false;
+  __log('Recording...');
+}
+
+function stopRecording(button) {
+  recorder && recorder.stop();
+  button.disabled = true;
+  button.previousElementSibling.disabled = false;
+  __log('Stopped recording.');
+  
+  // create WAV download link using audio data blob
+  createDownloadLink();
+  
+  recorder.clear();
+}
+
+function createDownloadLink() {
+	recorder && recorder.exportWAV(function(blob) {
+	var url = URL.createObjectURL(blob);
+	var li = document.createElement('li');
+	var au = document.createElement('audio');
+	var hf = document.createElement('a');
 	
-	function saveFileName() {
-		let newNameDiv = document.getElementById('newName');
-		
-		let newFileName =  document.getElementById('newFileName').value;
-		let oldFileName = document.getElementById('oldFileName').value;
-		//alert("not yet implemented");
-		//return
+	au.controls = true;
+	au.src = url;
+	hf.href = url;
+	hf.download = new Date().toISOString() + '.wav';
+	hf.innerHTML = hf.download;
+	li.appendChild(au);
+	li.appendChild(hf);
+	recordingslist.appendChild(li);
+	
+	var oReq = new XMLHttpRequest();
+	var ajaxUrl = "play.php?file=" + encodeURI(hf.download);
+	oReq.open("POST", ajaxUrl, true);
+	oReq.onload = function (oEvent) {
+	 // Uploaded.
+	 //alert('woot');
+	};
+	//i guess we already have a blob;
+	//var blob = new Blob(['abc123'], {type: 'text/plain'});
+	oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+ 	//oReq.setRequestHeader('Content-type', 'text/plain');
+	var reader = new FileReader();
+	//alert(url);
+	reader.readAsBinaryString(blob); 
+	reader.onloadend = function() {
+		base64data =  btoa(reader.result);                
+		//console.log(base64data);
+		//i found the base64data was corrupted at the server because '+' had been converted to ' ' and '/' may have also been corrupted
+		//so i've replaced those with ^ and ~, which don't get changed.  they are changed back on the server before the base64data is unencoded
+		oReq.send("blob=" + base64data.split('/').join('~').split('+').join('^'));
+	}
+   });
+}
+  
+function renameFile(filename) {
+	let newNameDiv = document.getElementById('newName');
+	document.getElementById('oldFileName').value = filename;
+	newNameDiv.style.display = '';
+
+}
+	
+function saveFileName() {
+	let newNameDiv = document.getElementById('newName');
+	
+	let newFileName =  document.getElementById('newFileName').value;
+	let oldFileName = document.getElementById('oldFileName').value;
+	//alert("not yet implemented");
+	//return
+  	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			newNameDiv.style.display = 'none';
+            window.location.reload();
+			
+        }
+	};
+	let url = "play.php?mode=renameFile&file=" + encodeURI(oldFileName) + "&newFileName=" + encodeURI(newFileName);
+  	xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+}
+	
+function deleteFile(filename) {
+	if(confirm("Are you sure you want to delete " + filename + "?")) {
 	  	var xmlhttp = new XMLHttpRequest();
 	    xmlhttp.onreadystatechange = function() {
 	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-				newNameDiv.style.display = 'none';
 	            window.location.reload();
-				
 	        }
 		};
-		let url = "play.php?mode=renameFile&file=" + encodeURI(oldFileName) + "&newFileName=" + encodeURI(newFileName);
+		let url = "play.php?mode=deleteFile&file=" + encodeURI(filename);
 	  	xmlhttp.open("GET", url, true);
 	    xmlhttp.send();
-	
 	}
+}
 	
-	function deleteFile(filename) {
-		if(confirm("Are you sure you want to delete " + filename + "?")) {
-		  	var xmlhttp = new XMLHttpRequest();
-		    xmlhttp.onreadystatechange = function() {
-		        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-		            window.location.reload();
-		        }
-			};
-			let url = "play.php?mode=deleteFile&file=" + encodeURI(filename);
-		  	xmlhttp.open("GET", url, true);
-		    xmlhttp.send();
-		}
-	}
-	
-  function serverPlay(filename) {
-  	var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            console.log('responseText:' + xmlhttp.responseText);
-            try {
-                var data = JSON.parse(xmlhttp.responseText);
-            } catch(err) {
-                console.log(err.message + " in " + xmlhttp.responseText);
-                return;
-            }
-            callback(data);
-        }
-	};
-	let url = "play.php?file=" + encodeURI(filename);
-  	xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-  }
+function serverPlay(filename) {
+ 	var xmlhttp = new XMLHttpRequest();
+   xmlhttp.onreadystatechange = function() {
+       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+           console.log('responseText:' + xmlhttp.responseText);
+           try {
+               var data = JSON.parse(xmlhttp.responseText);
+           } catch(err) {
+               console.log(err.message + " in " + xmlhttp.responseText);
+               return;
+           }
+           callback(data);
+       }
+};
+let url = "play.php?file=" + encodeURI(filename);
+ 	xmlhttp.open("GET", url, true);
+   xmlhttp.send();
+ }
   
-  function killAudio() {
-  	var xmlhttp = new XMLHttpRequest();
+function killAudio() {
+	var xmlhttp = new XMLHttpRequest();
 	audio.location = 'images/folder.png'; //make the audio iframe an image to silence it
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            console.log('responseText:' + xmlhttp.responseText);
-            try {
-                var data = JSON.parse(xmlhttp.responseText);
-            } catch(err) {
-                console.log(err.message + " in " + xmlhttp.responseText);
-                return;
-            }
-            callback(data);
-        }
+	   xmlhttp.onreadystatechange = function() {
+	       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+	           console.log('responseText:' + xmlhttp.responseText);
+	           try {
+	               var data = JSON.parse(xmlhttp.responseText);
+	           } catch(err) {
+	               console.log(err.message + " in " + xmlhttp.responseText);
+	               return;
+	           }
+	           callback(data);
+	       }
 	};
 	let url = "play.php?mode=kill";
-  	xmlhttp.open("GET", url, true);
-    xmlhttp.send(); 
-  
- }
+	 	xmlhttp.open("GET", url, true);
+	   xmlhttp.send(); 
+ 
+}
 
-  window.onload = function init() {
-    try {
-      // webkit shim
-      window.AudioContext = window.AudioContext || window.webkitAudioContext;
-      navigator.getUserMedia = ( navigator.getUserMedia ||
-                       navigator.webkitGetUserMedia ||
-                       navigator.mozGetUserMedia ||
-                       navigator.msGetUserMedia);
-					   
-      window.URL = window.URL || window.webkitURL;
-      
-      audio_context = new AudioContext;
-      __log('Audio context set up.');
-      __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
-    } catch (e) {
-      alert('No web audio support in this browser!');
-    }
-    
-    navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
-      __log('No live audio input: ' + e);
-    });
-  };
+window.onload = function init() {
+	try {
+	  // webkit shim
+	  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+	  navigator.getUserMedia = ( navigator.getUserMedia ||
+	                   navigator.webkitGetUserMedia ||
+	                   navigator.mozGetUserMedia ||
+	                   navigator.msGetUserMedia);
+		   
+	  window.URL = window.URL || window.webkitURL;
+	  
+	  audio_context = new AudioContext;
+	  __log('Audio context set up.');
+	  __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+	} catch (e) {
+	  alert('No web audio support in this browser!');
+	}
+	
+	navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+	  __log('No live audio input: ' + e);
+	});
+};
   </script>
   <body>
   <h2 class='title'>Audio Disturbatron 2019</h2>
-  <script src="recorder/dist/recorder.js"></script>
+  <script src="recorder.js"></script>
   <script src="tablesort_js.js"></script>
   <link rel="stylesheet" href='stylesheet.css'/>
 <div id='newName' style='display:none;position:absolute;top:200px;right:200px;background-color:#ddddff;border-style: solid;border-color:#999999;width:200px;height:200px;z-index:200;padding:10px'>
