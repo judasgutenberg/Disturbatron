@@ -13,7 +13,10 @@ if($_REQUEST && $_REQUEST["file"]) {
 }
   
 if($_POST) {
-	$blob = base64_decode(str_replace('^', '+', str_replace("~", "/", $_POST['blob']))); //OMG THESE FUCKING REPLACEMENTS!!!
+	//OMG -- $blob was being corrupted by urlencoding (i think pluses were becoming spaces) so 
+	//i convert them to ^ before shipping them here, meaning i have to conver them back before
+	//base64_decoding
+	$blob = base64_decode(str_replace('^', '+', str_replace("~", "/", $_POST['blob']))); 
 }
 
 if($_REQUEST && $_REQUEST["mode"]) {
@@ -73,9 +76,7 @@ if($_REQUEST && $_REQUEST["mode"]) {
 		echo json_encode($objOut);
 		exit;
 	}
-	
-	
-	
+
 }
 //echo "="  . $file . "=<P>";
 $command = escapeshellcmd('sudo python play.py  "' . $file . '"' );
