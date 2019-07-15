@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import pygame
 import os
 import RPi.GPIO as GPIO 		# import RPi.GPIO module 
 import sys
