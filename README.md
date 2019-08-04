@@ -11,3 +11,9 @@ The web page is a simple LAMP-stack directory browser showing any files in the a
 Not included here are a number of cron jobs designed to clean up various messes that can result when the megaphone relay is turned on but then not turned off.  I couldn't figure out a better way to kill playing audio than just restarting apache, though of course this causes messes as well (which those cron jobs are designed to clean up). 
 
 At some point I will include some hardware notes.
+
+Things that would be useful in a future version:
+
+1. Analog-to-digital converter to monitor battery power and solar power.
+
+2. Relay to turn off WiFi at night or in certain ranges of hours.
