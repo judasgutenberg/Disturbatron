@@ -5,6 +5,7 @@ function __log(e, data) {
 
 var audio_context;
 var recorder;
+var currentDir;
 
 function startUserMedia(stream) {
   window.input2 = audio_context.createMediaStreamSource(stream);
@@ -30,10 +31,8 @@ function stopRecording(button) {
   button.disabled = true;
   button.previousElementSibling.disabled = false;
   __log('Stopped recording.');
-  
   // create WAV download link using audio data blob
   createDownloadLink();
-  
   recorder.clear();
 }
 
@@ -80,29 +79,33 @@ function createDownloadLink() {
 function renameFile(filename) {
 	let newNameDiv = document.getElementById('newName');
 	document.getElementById('oldFileName').value = filename;
+	document.getElementById('newFileName').value = filename;
 	newNameDiv.style.display = '';
 
 }
 	
-function saveFileName() {
+function saveFileName(justCloseWindow) {
 	let newNameDiv = document.getElementById('newName');
-	
 	let newFileName =  document.getElementById('newFileName').value;
 	let oldFileName = document.getElementById('oldFileName').value;
+	if(justCloseWindow) {
+		newNameDiv.style.display = 'none';
+		return;
+	}
 	//alert("not yet implemented");
 	//return
   	var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 			newNameDiv.style.display = 'none';
-            window.location.reload();
-			
+            //window.location.reload();
+			populateDataTable(currentDir);
         }
 	};
 	let url = "play.php?mode=renameFile&file=" + encodeURI(oldFileName) + "&newFileName=" + encodeURI(newFileName);
+	console.log(url);
   	xmlhttp.open("GET", url, true);
     xmlhttp.send();
-
 }
 	
 function deleteFile(filename) {
@@ -110,7 +113,8 @@ function deleteFile(filename) {
 	  	var xmlhttp = new XMLHttpRequest();
 	    xmlhttp.onreadystatechange = function() {
 	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-	            window.location.reload();
+	            //window.location.reload();
+				populateDataTable(currentDir);
 	        }
 		};
 		let url = "play.php?mode=deleteFile&file=" + encodeURI(filename);
@@ -160,43 +164,69 @@ function killAudio() {
 }
 
 function populateDataTable(dir) {
-	var xmlhttp = new XMLHttpRequest();
-	let iconWidth = 10;
+	currentDir = dir;
+	let tableId = "sounds";
+	let divForDataTable = "dataTable";
+	let includeNavUp = true;
+	let out = '';
+	if(!dir) {
+		dir = 'audio'
+	} else {
+		includeNavUp = true;
+	}
+	let xmlhttp = new XMLHttpRequest();
+	let iconWidth = 20;
+
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			//console.log('responseText:' + xmlhttp.responseText);
-			try {
-				var data = JSON.parse(xmlhttp.responseText);
-				console.log(data);
-				let out = "<table class='resultsTable' id='sounds'>\n";
-				for(let record of data.files) {
-					//console.log(index);
-					let filename = record['name'];
-					let fullPath = dir + "/" + filename;
-					let size = record['size'];
-					let tasks = '';
-					if(filename != "." && filename != "..") {
-				 		tasks = "<a href='javascript:renameFile(\"" + fullPath + "\")'>rename</a> <a href='javascript:deleteFile(\"" + fullPath + "\")'>delete</a>";
-						if(!record['directory']) {
-				 			out +=  "<tr><td><img src='images/file.png' width='" + iconWidth + "' style='margin-right:10px'/>" + filename + "</td><td><a href='javascript: serverPlay(\"" +  fullPath + "\")'><img src='images/megaphone.png' width='" + iconWidth + "'/></a></td><td><a href='javascript: serverPlay(\"" +   fullPath  + "\")'><a target=audio href='" + fullPath + "'><img src='images/headphone.png' width='" + iconWidth + "'/></a></td><td>" +  record['modified'] + "</td><td style='text-align:right'>" + size + "</td><td>" + tasks + "</td></tr>\n"; 
-						} else {
-							out += "<tr><td><img src='images/folder.png' width='" + iconWidth + "' style='margin-right:10px'/><a href='?path=" + encodeURI(fullPath) + "'>" + filename + "</a></td><td></td><td></td><td>" + record['modified'] + "</td><td style='text-align:right'>0</td><td>" + tasks + "</td></tr>\n"; 
-						
-						}
-					}
-					
-				}
-				out += "</table>";
-				//console.log(out);
-				document.getElementById('dataTable').innerHTML = out;
-			} catch(err) {
-				console.log(err.message + " in " + xmlhttp.responseText);
-				return;
+			var data = JSON.parse(xmlhttp.responseText);
+			let killLink = '';
+			let parentPath = null;
+			let parentArray = dir.split("/");
+			parentArray.pop();
+			let allowUpNav = false;
+			console.log(parentArray);
+			if(parentArray) {
+				parentPath = parentArray.join("/");
 			}
-			//callback(data);
+			if(parentArray.length > 0) {
+				allowUpNav = true;
+			}
+			out += "<table class='resultsTable' id='" + tableId + "'>\n";
+			out += "<thead><tr><th ><a href='javascript: SortTable(\"" + tableId + "\", 0)'>file</a></th><th>play</th><th>test</th><th><a href='javascript: SortTable(\"" + tableId + "\", 3)'>modified</a></th><th><a href='javascript: SortTable(\"" + tableId + "\", 4)'>size</a></th><th>tasks</th></tr></thead>\n";
+			 
+			let directoryUrl = "javascript: populateDataTable(\"" + encodeURI(parentPath) + "\")";
+			if(allowUpNav) {
+				out += "<tr  name='sortavoid'><td colspan='6'><a href='" + directoryUrl + "'><img src='images/up.png' width='" + iconWidth + "'/></a></td></tr>\n"; 
+			}
+			for(let record of data.files) {
+				//console.log(index);
+				let filename = record['name'];
+				let fullPath = dir + "/" + filename;
+				let size = record['size'];
+				let tasks = '';
+				//console.log(fullPath);
+				if(filename != "." && filename != "..") {
+			 		tasks = "<a href='javascript:renameFile(\"" + fullPath + "\")'>rename</a> <a href='javascript:deleteFile(\"" + fullPath + "\")'>delete</a>";
+					if(!record['directory']) {
+			 			out +=  "<tr><td><img src='images/file.png' width='" + iconWidth + "' style='margin-right:10px'/>" + filename + "</td><td><a href='javascript: serverPlay(\"" +  fullPath + "\")'><img src='images/megaphone.png' width='" + iconWidth + "'/></a></td><td><a href='javascript: serverPlay(\"" +   fullPath  + "\")'><a target=audio href='" + fullPath + "'><img src='images/headphone.png' width='" + iconWidth + "'/></a></td><td>" +  record['modified'] + "</td><td style='text-align:right'>" + size + "</td><td>" + tasks + "</td></tr>\n"; 
+					} else {
+						//let directoryUrl = "?path=" + encodeURI(fullPath); //old way
+						directoryUrl = "javascript: populateDataTable(\"" + encodeURI(fullPath) + "\")";
+						out += "<tr><td><img src='images/folder.png' width='" + iconWidth + "' style='margin-right:10px'/><a href='" + directoryUrl + "'>" + filename + "</a></td><td></td><td></td><td>" + record['modified'] + "</td><td style='text-align:right'>0</td><td>" + tasks + "</td></tr>\n"; 
+					
+					}
+				}
+			}
+			out += "</table>";
+			//console.log(out);
+			document.getElementById(divForDataTable).innerHTML = out;
+			NumberRows(tableId, 2);
+			//re-runs the last sort so things are still sorted correctly
+			redoLastSort('sounds');
 		}
 	};
-	let url = "play.php?mode=browse";
+	let url = "play.php?mode=browse&path=" + dir;
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send(); 
 }

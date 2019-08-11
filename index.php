@@ -14,6 +14,10 @@ if($_REQUEST && $_REQUEST["path"]) {
 $iconWidth = 20;
 $basePath = 'audio';
 $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width='" . $iconWidth . "' style='margin-right:10px'/>kill playing audio</a><br>";
+
+//if we render the HTML with PHP:
+/*
+
 $includeNavUp = false;
 if($path) {
 	$dir   =  $path;
@@ -31,9 +35,8 @@ if(strpos($dir, "..") !== false) {
 //done catching all those haxxo7s!
 $files = scandir($dir);
 $parentPath = join("/", array_pop(explode("/", $dir)));
+
 $out = ""; 
-//i could also do this via AJAX but that's too much trouble:
-$out .= "<div><div style='display:inline-block'><h4>Pick a file to play:</h4></div><div style='display:inline-block;margin-left:80px'>" . $killLink . "</div></div>";
 $out .= "<table class='resultsTable' id='sounds'>\n";
 $out .= "<thead><tr><th ><a href='javascript: SortTable(\"sounds\", 0)'>file</a></th><th>play</th><th>test</th><th><a href='javascript: SortTable(\"sounds\", 3)'>modified</a></th><th><a href='javascript: SortTable(\"sounds\", 4)'>size</a></th><th>tasks</th></tr></thead>\n";
 if($includeNavUp) {
@@ -57,7 +60,12 @@ for($i=0; $i<count($files); $i++) {
 	}
 }
 $out .= "</table>\n";
-$out .= "<script>NumberRows('sounds', 2);</script>";
+*/
+//if we do things in javascript;
+$out .= "<div><div style='display:inline-block'><h4>Pick a file to play:</h4></div><div style='display:inline-block;margin-left:80px'>"  . $killLink . "</div></div>";
+$out .= "<div id='dataTable'></div>";
+$out .= "\n<script>\npopulateDataTable();\n</script>";
+//$out .= "\n<script>\nNumberRows('sounds', 2);\n</script>";
 $out .= $killLink;
 
 ?>
@@ -74,174 +82,12 @@ $out .= $killLink;
  <div style='float:right'>
   <button onclick="startRecording(this);">record</button>
   <button onclick="stopRecording(this);" disabled>stop</button>
-  
   <h4>Recordings</h4>
   <ul id="recordingslist"></ul>
-  
   <h4>Log</h4>
   <pre id="log"></pre>
  </div>
- <script>
-function __log(e, data) {
-	log.innerHTML += "\n" + e + " " + (data || '');
-}
-
-var audio_context;
-var recorder;
-
-function startUserMedia(stream) {
-  window.input2 = audio_context.createMediaStreamSource(stream);
-  __log('Media stream created.');
-
-  // Uncomment if you want the audio to feedback directly
-  //input.connect(audio_context.destination);
-  //__log('Input connected to audio context destination.');
-  
-  recorder = new Recorder(window.input2);
-  __log('Recorder initialised.');
-}
-
-function startRecording(button) {
-  recorder && recorder.record();
-  button.disabled = true;
-  button.nextElementSibling.disabled = false;
-  __log('Recording...');
-}
-
-function stopRecording(button) {
-  recorder && recorder.stop();
-  button.disabled = true;
-  button.previousElementSibling.disabled = false;
-  __log('Stopped recording.');
-  
-  // create WAV download link using audio data blob
-  createDownloadLink();
-  
-  recorder.clear();
-}
-
-function createDownloadLink() {
-	recorder && recorder.exportWAV(function(blob) {
-	var url = URL.createObjectURL(blob);
-	var li = document.createElement('li');
-	var au = document.createElement('audio');
-	var hf = document.createElement('a');
-	
-	au.controls = true;
-	au.src = url;
-	hf.href = url;
-	hf.download = new Date().toISOString() + '.wav';
-	hf.innerHTML = hf.download;
-	li.appendChild(au);
-	li.appendChild(hf);
-	recordingslist.appendChild(li);
-	
-	var oReq = new XMLHttpRequest();
-	var ajaxUrl = "play.php?file=" + encodeURI(hf.download);
-	oReq.open("POST", ajaxUrl, true);
-	oReq.onload = function (oEvent) {
-	 // Uploaded.
-	 //alert('woot');
-	};
-	//i guess we already have a blob;
-	//var blob = new Blob(['abc123'], {type: 'text/plain'});
-	oReq.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
- 	//oReq.setRequestHeader('Content-type', 'text/plain');
-	var reader = new FileReader();
-	//alert(url);
-	reader.readAsBinaryString(blob); 
-	reader.onloadend = function() {
-		base64data =  btoa(reader.result);                
-		//console.log(base64data);
-		//i found the base64data was corrupted at the server because '+' had been converted to ' ' and '/' may have also been corrupted
-		//so i've replaced those with ^ and ~, which don't get changed.  they are changed back on the server before the base64data is unencoded
-		oReq.send("blob=" + base64data.split('/').join('~').split('+').join('^'));
-	}
-   });
-}
-  
-function renameFile(filename) {
-	let newNameDiv = document.getElementById('newName');
-	document.getElementById('oldFileName').value = filename;
-	newNameDiv.style.display = '';
-
-}
-	
-function saveFileName() {
-	let newNameDiv = document.getElementById('newName');
-	
-	let newFileName =  document.getElementById('newFileName').value;
-	let oldFileName = document.getElementById('oldFileName').value;
-	//alert("not yet implemented");
-	//return
-  	var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-			newNameDiv.style.display = 'none';
-            window.location.reload();
-			
-        }
-	};
-	let url = "play.php?mode=renameFile&file=" + encodeURI(oldFileName) + "&newFileName=" + encodeURI(newFileName);
-  	xmlhttp.open("GET", url, true);
-    xmlhttp.send();
-
-}
-	
-function deleteFile(filename) {
-	if(confirm("Are you sure you want to delete " + filename + "?")) {
-	  	var xmlhttp = new XMLHttpRequest();
-	    xmlhttp.onreadystatechange = function() {
-	        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-	            window.location.reload();
-	        }
-		};
-		let url = "play.php?mode=deleteFile&file=" + encodeURI(filename);
-	  	xmlhttp.open("GET", url, true);
-	    xmlhttp.send();
-	}
-}
-	
-function serverPlay(filename) {
- 	var xmlhttp = new XMLHttpRequest();
-   xmlhttp.onreadystatechange = function() {
-       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-           console.log('responseText:' + xmlhttp.responseText);
-           try {
-               var data = JSON.parse(xmlhttp.responseText);
-           } catch(err) {
-               console.log(err.message + " in " + xmlhttp.responseText);
-               return;
-           }
-           callback(data);
-       }
-};
-let url = "play.php?file=" + encodeURI(filename);
- 	xmlhttp.open("GET", url, true);
-   xmlhttp.send();
- }
-  
-function killAudio() {
-	var xmlhttp = new XMLHttpRequest();
-	audio.location = 'images/folder.png'; //make the audio iframe an image to silence it
-	   xmlhttp.onreadystatechange = function() {
-	       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-	           console.log('responseText:' + xmlhttp.responseText);
-	           try {
-	               var data = JSON.parse(xmlhttp.responseText);
-	           } catch(err) {
-	               console.log(err.message + " in " + xmlhttp.responseText);
-	               return;
-	           }
-	           callback(data);
-	       }
-	};
-	let url = "play.php?mode=kill";
-	 	xmlhttp.open("GET", url, true);
-	   xmlhttp.send(); 
- 
-}
-
+<script>
 window.onload = function init() {
 	try {
 	  // webkit shim
@@ -264,19 +110,21 @@ window.onload = function init() {
 	  __log('No live audio input: ' + e);
 	});
 };
-  </script>
-  <body>
-  <h2 class='title'>Audio Disturbatron 2019</h2>
-  <script src="recorder.js"></script>
-  <script src="tablesort_js.js"></script>
-  <link rel="stylesheet" href='stylesheet.css'/>
-<div id='newName' style='display:none;position:absolute;top:200px;right:200px;background-color:#ddddff;border-style: solid;border-color:#999999;width:200px;height:200px;z-index:200;padding:10px'>
-	<h3>Rename File</h3>
-	<input id='oldFileName' type='hidden' size='20'>
-	New file name:  <input id='newFileName' size='20'>
-	<button onclick='saveFileName()'>Save New File Name</button>
-</div>
-<?php echo $out ?>
-  <iframe name='audio' width=0 height=0></iframe>
-  </body>
-  </html>
+</script>
+<script src="disturbatron.js"></script>
+<body>
+	<h2 class='title'>Audio Disturbatron 2019</h2>
+	<script src="recorder.js"></script>
+	<script src="tablesort_js.js"></script>
+	<link rel="stylesheet" href='stylesheet.css'/>
+	<div id='newName' style='display:none;position:absolute;top:200px;right:200px;background-color:#ddddff;border-style: solid;border-color:#999999;width:360px;height:200px;z-index:200;padding:10px'>
+	<h3>Rename File: </h3>
+	Old file name: <input disabled id='oldFileName' size='40'>
+	New file name:  <input id='newFileName' size='40'>
+	<button onclick='saveFileName()' type='button'>Rename</button>
+	<button onclick='saveFileName(true)' type='button'>Cancel</button>
+	</div>
+	<?php echo $out ?>
+	<iframe name='audio' width=0 height=0></iframe>
+</body>
+</html>

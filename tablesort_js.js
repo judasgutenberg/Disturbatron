@@ -12,8 +12,9 @@
 //publishing your source code under the same license
 //contact the developer at gus@asecular.com  http://asecular.com
 
-var arrDirection=new Array(); //stores global sort directions for the columns so they can be reversed with next click
-var bwlsortable=false;
+var arrDirection = new Array(); //stores global sort directions for the columns so they can be reversed with next click
+var bwlsortable = false;
+var lastSort = new Array(); //so we can redo old sorts
 String.prototype.trim = function() {
 	return this.replace(/^\s+|\s+$/g,"");
 }
@@ -44,6 +45,7 @@ function GetParent(thisnode)
 
 function NumberRows(idsorttable, intTDMinCount)
 {
+	//console.log("YEEE");
 	var idprefix=idsorttable + "idrow";
 	var thistable=document.getElementById(idsorttable);
 	var arrTRs=document.getElementsByTagName('tr');
@@ -54,6 +56,7 @@ function NumberRows(idsorttable, intTDMinCount)
 	{
 		thistr=arrTRs[i];
 		var thesechildren=thistr.childNodes;
+		//console.log(thesechildren);
 		var tdcount=0;
 		var strDirection="";
 		var bwlSubsidiary=false;
@@ -75,11 +78,14 @@ function NumberRows(idsorttable, intTDMinCount)
 		}
 		for(j=0; j<thesechildren.length; j++)
 		{
+			//console.log(j);
 			var thischild=thesechildren[j];
 			if (thischild.nodeName.toLowerCase()=="td")
 			{
+				
 				if(thischild.colSpan)
 				{
+					
 					//this might not be a perfect test for all tables
 					//but generally a row with a colspan in a sortable nested table
 					//belongs to its immediate parent and should ride along through the sort
@@ -95,6 +101,7 @@ function NumberRows(idsorttable, intTDMinCount)
 			}
 			if (thischild.innerHTML)
 			{
+				
 				if (thischild.innerHTML.indexOf("SortTable(")>-1)
 				{
 					bwlHeaderFail=true;
@@ -102,21 +109,18 @@ function NumberRows(idsorttable, intTDMinCount)
 			}
 		}
 		var NextTableUp=ClimbTreeToTagFromObj(thistr, "table");
-		if (NextTableUp==thistable )
+		//console.log(NextTableUp, thistable);
+		if (NextTableUp.id==thistable.id )
 		{
+			
 			if(bwlSubsidiary && !bwlSortAvoid )
 			{
-				//\alert("##");
 				thistr.id=idprefix + (intTRCount-1) + "_sub";
-				
 			}
 			else if(tdcount>intTDMinCount && !bwlHeaderFail )
 			{
-		
 				intsortable++;
 				thistr.id=idprefix + intTRCount;
-				
-				
 			}
 			else
 			{
@@ -126,7 +130,7 @@ function NumberRows(idsorttable, intTDMinCount)
 		}
 		else
 		{
-			
+		 
 			//idNextTableUp=NextTableUp.id;
 			//if(idNextTableUp.indexOf("sorttable")>0)
 		
@@ -140,14 +144,27 @@ function NumberRows(idsorttable, intTDMinCount)
 	}
 }
 
-function SortTable(idsorttable, intColumn, intStart)
+function redoLastSort(tableId) {
+	if(!tableId) {
+		tableId = lastSort[0];
+	}
+	console.log(tableId, lastSort[1], lastSort[2]);
+	SortTable(tableId, lastSort[1], lastSort[2], lastSort[3]);
+}
+ 
+function SortTable(idsorttable, intColumn, intStart, direction)
 {
+	
 	if(bwlsortable)//i've turned off this functionality if the number of sortable rows is less than 2
 	{
 		var out="";
 		var i;
 		var j;
-		var arrContainer=CreateColumnArray(idsorttable, intColumn, 0, arrDirection[intColumn]);
+		if(!direction) {
+			direction =  arrDirection[intColumn];
+ 		}
+		lastSort = [idsorttable, intColumn, intStart, direction]; //save in a global in case we want to redo;
+		var arrContainer=CreateColumnArray(idsorttable, intColumn, 0, direction);
 		var idprefix=idsorttable + "idrow";
 		var sortcontainer=document.createElement('tbody');  //for IE this has to be tbody.
 		var strClass1="", strClass2="" ;
@@ -160,11 +177,20 @@ function SortTable(idsorttable, intColumn, intStart)
 		}
 		if(arrDirection[intColumn]=="b")
 		{
-			arrDirection[intColumn]="f";
+			if(direction = "b") {
+				arrDirection[intColumn]="f";
+			} else {
+				arrDirection[intColumn]="b";
+			}
 		}
 		else
 		{
-			arrDirection[intColumn]="b";
+			if(direction = "b") {
+				arrDirection[intColumn]="b";
+			} else {
+				arrDirection[intColumn]="f";
+			}
+			
 		}
 		//beginning rows that are not sorted
 		for(i=0; i<4; i++)
