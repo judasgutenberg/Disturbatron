@@ -25,6 +25,8 @@ body
 	font-weight:normal;
 	text-shadow: 2px 2px 2px #ffffff;
 }
+
+
 .recorder {
 	float:right;
 	background-color:#ddddff;
@@ -51,14 +53,14 @@ body
 
 .resultsTable td
 {
-	padding:10px;
+	padding:3px;
 	border:1px solid #cccccc;
-	text-align:left;
+ 
 	vertical-align:top;
 }
 .resultsTable th
 {
-	padding:10px;
+	padding:3px;
 	border:1px solid #cccccc;
 	font-weight:bold;
 	text-align:left;
@@ -69,11 +71,15 @@ body
 {
 	background:#ffffff;
 }
+
 .resultsTable tr:nth-child(even)
 {
 	background:#f8f8f8; 
 }
 
+.numericColumn {
+	text-align: right;
+}
 
 a:link {
 	color:#1C77AC;

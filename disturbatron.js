@@ -208,11 +208,11 @@ function populateDataTable(dir) {
 				if(filename != "." && filename != "..") {
 			 		tasks = "<a href='javascript:renameFile(\"" + fullPath + "\")'>rename</a> <a href='javascript:deleteFile(\"" + fullPath + "\")'>delete</a>";
 					if(!record['directory']) {
-			 			out +=  "<tr><td><img src='images/file.png' width='" + iconWidth + "' style='margin-right:10px'/>" + filename + "</td><td><a href='javascript: serverPlay(\"" +  fullPath + "\")'><img src='images/megaphone.png' width='" + iconWidth + "'/></a></td><td><a href='javascript: serverPlay(\"" +   fullPath  + "\")'><a target=audio href='" + fullPath + "'><img src='images/headphone.png' width='" + iconWidth + "'/></a></td><td>" +  record['modified'] + "</td><td style='text-align:right'>" + size + "</td><td>" + tasks + "</td></tr>\n"; 
+			 			out +=  "<tr><td><img src='images/file.png' width='" + iconWidth + "' style='margin-right:10px'/>" + filename + "</td><td><a href='javascript: serverPlay(\"" +  fullPath + "\")'><img src='images/megaphone.png' width='" + iconWidth + "'/></a></td><td><a href='javascript: serverPlay(\"" +   fullPath  + "\")'><a target=audio href='" + fullPath + "'><img src='images/headphone.png' width='" + iconWidth + "'/></a></td><td>" +  record['modified'] + "</td><td class='numericColumn'>" + size + "</td><td>" + tasks + "</td></tr>\n"; 
 					} else {
 						//let directoryUrl = "?path=" + encodeURI(fullPath); //old way
 						directoryUrl = "javascript: populateDataTable(\"" + encodeURI(fullPath) + "\")";
-						out += "<tr><td><img src='images/folder.png' width='" + iconWidth + "' style='margin-right:10px'/><a href='" + directoryUrl + "'>" + filename + "</a></td><td></td><td></td><td>" + record['modified'] + "</td><td style='text-align:right'>-</td><td>" + tasks + "</td></tr>\n"; 
+						out += "<tr><td><img src='images/folder.png' width='" + iconWidth + "' style='margin-right:10px'/><a href='" + directoryUrl + "'>" + filename + "</a></td><td></td><td></td><td>" + record['modified'] + "</td><td class='numericColumn'>-</td><td>" + tasks + "</td></tr>\n"; 
 					}
 				}
 			}
