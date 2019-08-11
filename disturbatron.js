@@ -175,7 +175,6 @@ function populateDataTable(dir) {
 		includeNavUp = true;
 	}
 	let xmlhttp = new XMLHttpRequest();
-	
 
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -214,7 +213,6 @@ function populateDataTable(dir) {
 						//let directoryUrl = "?path=" + encodeURI(fullPath); //old way
 						directoryUrl = "javascript: populateDataTable(\"" + encodeURI(fullPath) + "\")";
 						out += "<tr><td><img src='images/folder.png' width='" + iconWidth + "' style='margin-right:10px'/><a href='" + directoryUrl + "'>" + filename + "</a></td><td></td><td></td><td>" + record['modified'] + "</td><td style='text-align:right'>-</td><td>" + tasks + "</td></tr>\n"; 
-					
 					}
 				}
 			}

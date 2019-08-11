@@ -1,5 +1,6 @@
 //using an HTML table as a limited database table, will sort rows by the column specified
 //Judas Gutenberg Dec 04 2007
+//NOTE: altered Aug 2019 to store last sort and allows it to be re-run in cases where a refresh-like AJAX operation has happened
 //to use:  first set the id of your table to sort to "idsorttable"
 //second call  NumberRows(intTDMinCount) (where intTDMinCount is the minimum number of columns for a table row to be in play)
 //that will set consecutive ids for all the TR nodes in the table whose ID is idsorttable
