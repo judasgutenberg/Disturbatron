@@ -1,0 +1,104 @@
+
+
+body
+{
+	font-family:arial,sans-serif;
+	font-size:13px; 
+	background:#EEEEEE;
+	margin:0px;
+	padding:0px;
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	right:0px;
+}
+
+
+.title
+{
+	font-size:24px;
+	margin-bottom:-3px;
+	color: #1C77AC;
+	font-weight:normal;
+	text-shadow: 2px 2px 2px #ffffff;
+}
+
+
+.recorder {
+	float:right;
+	background-color:#ddddff;
+	padding:10px;
+	background-color:#ddddff;
+	border-style: solid;
+	border-color:#999999;
+}
+
+.renamePopup
+{
+	display:none;
+	position:fixed;
+	top:200px;
+	right:200px;
+	background-color:#ddddff;
+	border-style: solid;
+	border-color:#999999;
+	width:360px;
+	height:200px;
+	z-index:200;
+	padding:10px
+}
+
+.resultsTable td
+{
+	padding:3px;
+	border:1px solid #cccccc;
+ 
+	vertical-align:top;
+}
+.resultsTable th
+{
+	padding:3px;
+	border:1px solid #cccccc;
+	font-weight:bold;
+	text-align:left;
+	vertical-align:top;
+	background:#f8f8f8;
+}
+.resultsTable tr:nth-child(odd)
+{
+	background:#ffffff;
+}
+
+.resultsTable tr:nth-child(even)
+{
+	background:#f8f8f8; 
+}
+
+.numericColumn {
+	text-align: right;
+}
+
+a:link {
+	color:#1C77AC;
+	text-decoration:none;
+
+}
+a:visited {
+	color:#1C77AC
+
+}
+a:hover{
+	color:#AC771C;
+
+}
+
+ul { 
+	ist-style: none; }
+
+
+#recordingslist audio { 
+	display: block; margin-bottom: 10px; 
+}
