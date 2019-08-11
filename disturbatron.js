@@ -80,8 +80,7 @@ function renameFile(filename) {
 	let newNameDiv = document.getElementById('newName');
 	document.getElementById('oldFileName').value = filename;
 	document.getElementById('newFileName').value = filename;
-	newNameDiv.style.display = '';
-
+	newNameDiv.style.display = 'block';
 }
 	
 function saveFileName(justCloseWindow) {
@@ -213,7 +212,7 @@ function populateDataTable(dir) {
 					} else {
 						//let directoryUrl = "?path=" + encodeURI(fullPath); //old way
 						directoryUrl = "javascript: populateDataTable(\"" + encodeURI(fullPath) + "\")";
-						out += "<tr><td><img src='images/folder.png' width='" + iconWidth + "' style='margin-right:10px'/><a href='" + directoryUrl + "'>" + filename + "</a></td><td></td><td></td><td>" + record['modified'] + "</td><td style='text-align:right'>0</td><td>" + tasks + "</td></tr>\n"; 
+						out += "<tr><td><img src='images/folder.png' width='" + iconWidth + "' style='margin-right:10px'/><a href='" + directoryUrl + "'>" + filename + "</a></td><td></td><td></td><td>" + record['modified'] + "</td><td style='text-align:right'>-</td><td>" + tasks + "</td></tr>\n"; 
 					
 					}
 				}

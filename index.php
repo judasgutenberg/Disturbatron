@@ -6,18 +6,17 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
  
-$path = "";
-if($_REQUEST && $_REQUEST["path"]) {
-	$path = $_REQUEST["path"];
-}
 
-$iconWidth = 20;
-$basePath = 'audio';
 $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width='" . $iconWidth . "' style='margin-right:10px'/>kill playing audio</a><br>";
 
 //if we render the HTML with PHP:
 /*
-
+$path = "";
+if($_REQUEST && $_REQUEST["path"]) {
+	$path = $_REQUEST["path"];
+}
+$iconWidth = 20;
+$basePath = 'audio';
 $includeNavUp = false;
 if($path) {
 	$dir   =  $path;
@@ -72,7 +71,7 @@ $out .= $killLink;
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Disturbatron 2019</title>
 </head>
@@ -117,10 +116,10 @@ window.onload = function init() {
 	<script src="recorder.js"></script>
 	<script src="tablesort_js.js"></script>
 	<link rel="stylesheet" href='stylesheet.css'/>
-	<div id='newName' style='display:none;position:absolute;top:200px;right:200px;background-color:#ddddff;border-style: solid;border-color:#999999;width:360px;height:200px;z-index:200;padding:10px'>
+	<div id='newName'  class='renamePopup'>
 	<h3>Rename File: </h3>
-	Old file name: <input disabled id='oldFileName' size='40'>
-	New file name:  <input id='newFileName' size='40'>
+	Old file name: <input disabled id='oldFileName' size='40'><br/>
+	New file name:  <input id='newFileName' size='40'><br/>
 	<button onclick='saveFileName()' type='button'>Rename</button>
 	<button onclick='saveFileName(true)' type='button'>Cancel</button>
 	</div>

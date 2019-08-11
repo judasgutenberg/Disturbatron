@@ -17,20 +17,30 @@ body
 }
 
 
-
-
 .title
 {
 	font-size:24px;
 	margin-bottom:-3px;
 	color: #1C77AC;
 	font-weight:normal;
- 
 	text-shadow: 2px 2px 2px #ffffff;
 }
 
 
-
+.renamePopup
+{
+	display:none;
+	position:fixed;
+	top:200px;
+	right:200px;
+	background-color:#ddddff;
+	border-style: solid;
+	border-color:#999999;
+	width:360px;
+	height:200px;
+	z-index:200;
+	padding:10px
+}
 
 .resultsTable td
 {
