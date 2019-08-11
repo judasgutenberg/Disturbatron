@@ -155,7 +155,6 @@ function redoLastSort(tableId) {
  
 function SortTable(idsorttable, intColumn, intStart, direction)
 {
-	
 	if(bwlsortable)//i've turned off this functionality if the number of sortable rows is less than 2
 	{
 		var out="";
@@ -191,7 +190,6 @@ function SortTable(idsorttable, intColumn, intStart, direction)
 			} else {
 				arrDirection[intColumn]="f";
 			}
-			
 		}
 		//beginning rows that are not sorted
 		for(i=0; i<4; i++)

@@ -6,62 +6,7 @@
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
  
-
 $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width='" . $iconWidth . "' style='margin-right:10px'/>kill playing audio</a><br>";
-
-//if we render the HTML with PHP:
-/*
-$path = "";
-if($_REQUEST && $_REQUEST["path"]) {
-	$path = $_REQUEST["path"];
-}
-$iconWidth = 20;
-$basePath = 'audio';
-$includeNavUp = false;
-if($path) {
-	$dir   =  $path;
-	$includeNavUp = true;
-} else {
-	$dir   = $basePath;
-}
-//catch all the attempts to browse the rest of the file system
-if(substr(0, 1, $dir) == '1') {
-	$dir = substr(1, $dir);
-}
-if(strpos($dir, "..") !== false) {
-	die("No haxxo7s allowed!");
-}
-//done catching all those haxxo7s!
-$files = scandir($dir);
-$parentPath = join("/", array_pop(explode("/", $dir)));
-
-$out = ""; 
-$out .= "<table class='resultsTable' id='sounds'>\n";
-$out .= "<thead><tr><th ><a href='javascript: SortTable(\"sounds\", 0)'>file</a></th><th>play</th><th>test</th><th><a href='javascript: SortTable(\"sounds\", 3)'>modified</a></th><th><a href='javascript: SortTable(\"sounds\", 4)'>size</a></th><th>tasks</th></tr></thead>\n";
-if($includeNavUp) {
-	$out .=  "<tr  name='sortavoid'><td colspan='6'><a href='?path=" . urlencode($parentPath) . "'><img src='images/up.png' width='" . $iconWidth . "'/>" . $filename . "</a></td></tr>\n"; 
-}
-for($i=0; $i<count($files); $i++) {
-	$filename = $files[$i];
-	$fullPath = $dir . "/" . $filename;
-	$size = filesize($fullPath) ;
-	 
-	$modifiedDate = filemtime($fullPath);
-
-	if($filename != "." && $filename != "..") {
- 		$tasks = "<a href='javascript:renameFile(\"" . $fullPath . "\")'>rename</a> <a href='javascript:deleteFile(\"" . $fullPath . "\")'>delete</a>";
-		if(is_file($fullPath)) {
- 			$out .=  "<tr><td><img src='images/file.png' width='" . $iconWidth . "' style='margin-right:10px'/>" .  $filename . "</td><td><a href='javascript: serverPlay(\"" .   $fullPath  . "\")'><img src='images/megaphone.png' width='" . $iconWidth . "'/></a></td><td><a href='javascript: serverPlay(\"" .   $fullPath   . "\")'><a target=audio href='" .  $fullPath . "'><img src='images/headphone.png' width='" . $iconWidth . "'/></a></td><td>" . date ("Y-m-d H:i:s.", $modifiedDate). "</td><td style='text-align:right'>" . $size . "</td><td>" . $tasks. "</td></tr>\n"; 
-		} else {
-			$out .=  "<tr><td><img src='images/folder.png' width='" . $iconWidth . "' style='margin-right:10px'/><a href='?path=" . urlencode($fullPath) . "'>" . $filename . "</a></td><td></td><td></td><td>" . date ("Y-m-d H:i:s.", $modifiedDate). "</td><td style='text-align:right'>0</td><td>" . $tasks. "</td></tr>\n"; 
-		
-		}
-	}
-}
-$out .= "</table>\n";
-*/
- 
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,7 +37,6 @@ window.onload = function init() {
 	                   navigator.msGetUserMedia);
 		   
 	  window.URL = window.URL || window.webkitURL;
-	  
 	  audio_context = new AudioContext;
 	  __log('Audio context set up.');
 	  __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
@@ -118,14 +62,13 @@ window.onload = function init() {
 		<button onclick='saveFileName()' type='button'>Rename</button>
 		<button onclick='saveFileName(true)' type='button'>Cancel</button>
 	</div>
-	<?php echo $out ?>
-	
-	<div><
-		div style='display:inline-block'>
-		<h4>Pick a file to play:</h4>
-	</div>
-	<div style='display:inline-block;margin-left:80px'>
-		<?php echo $killLink;?>
+	<div>
+		<div style='display:inline-block'>
+			<h4>Pick a file to play:</h4>
+		</div>
+		<div style='display:inline-block;margin-left:80px'>
+			<?php echo $killLink;?>
+		</div>
 	</div>
 	<div id='dataTable'></div>
 	<script>populateDataTable();</script>
