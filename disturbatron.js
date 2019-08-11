@@ -1,11 +1,10 @@
+var audio_context;
+var recorder;
+var currentDir;
 
 function __log(e, data) {
 	log.innerHTML += "\n" + e + " " + (data || '');
 }
-
-var audio_context;
-var recorder;
-var currentDir;
 
 function startUserMedia(stream) {
   window.input2 = audio_context.createMediaStreamSource(stream);
@@ -123,23 +122,24 @@ function deleteFile(filename) {
 }
 	
 function serverPlay(filename) {
- 	var xmlhttp = new XMLHttpRequest();
-   xmlhttp.onreadystatechange = function() {
-       if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-           console.log('responseText:' + xmlhttp.responseText);
-           try {
-               var data = JSON.parse(xmlhttp.responseText);
-           } catch(err) {
-               console.log(err.message + " in " + xmlhttp.responseText);
-               return;
-           }
-           callback(data);
-       }
-};
-let url = "play.php?file=" + encodeURI(filename);
- 	xmlhttp.open("GET", url, true);
-   xmlhttp.send();
- }
+	var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			console.log('responseText:' + xmlhttp.responseText);
+			try {
+				var data = JSON.parse(xmlhttp.responseText);
+			} catch(err) {
+				console.log(err.message + " in " + xmlhttp.responseText);
+				return;
+			}
+			callback(data);
+		}
+	};
+	
+	let url = "play.php?file=" + encodeURI(filename);
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}
   
 function killAudio() {
 	var xmlhttp = new XMLHttpRequest();
@@ -158,12 +158,13 @@ function killAudio() {
 	};
 	let url = "play.php?mode=kill";
 	xmlhttp.open("GET", url, true);
-	xmlhttp.send(); 
- 
+	xmlhttp.send();
 }
 
+//renders a file browser looking at dir via AJAX -- this of course requires backend support where play.php?mode=browse&path=XXX returns JSON
 function populateDataTable(dir) {
-	currentDir = dir;
+	let iconWidth = 15;
+	currentDir = dir; //currentDir is a global
 	let tableId = "sounds";
 	let divForDataTable = "dataTable";
 	let includeNavUp = true;
@@ -174,7 +175,7 @@ function populateDataTable(dir) {
 		includeNavUp = true;
 	}
 	let xmlhttp = new XMLHttpRequest();
-	let iconWidth = 20;
+	
 
 	xmlhttp.onreadystatechange = function() {
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {

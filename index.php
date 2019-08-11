@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////////////////
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
-$iconWidth = 20;
+$iconWidth = 15;
 $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width='" . $iconWidth . "' style='margin-right:10px'/>kill playing audio</a><br>";
 ?>
 <!DOCTYPE html>
