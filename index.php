@@ -5,7 +5,7 @@
 //////////////////////////////////////////////////////////////
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
- 
+$iconWidth = 20;
 $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width='" . $iconWidth . "' style='margin-right:10px'/>kill playing audio</a><br>";
 ?>
 <!DOCTYPE html>
@@ -16,9 +16,7 @@ $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width=
 	<title>Disturbatron 2019</title>
 </head>
 <body>
-
- 
- <div style='float:right'>
+ <div class='recorder'>
   <button onclick="startRecording(this);">record</button>
   <button onclick="stopRecording(this);" disabled>stop</button>
   <h4>Recordings</h4>
