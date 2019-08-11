@@ -46,7 +46,8 @@ function GetParent(thisnode)
 function NumberRows(idsorttable, intTDMinCount)
 {
 	//console.log("YEEE");
-	var idprefix=idsorttable + "idrow";
+	var strDirection = '';
+	var idprefix=idsorttable + 'idrow';
 	var thistable=document.getElementById(idsorttable);
 	var arrTRs=document.getElementsByTagName('tr');
 	var intTRCount=0;
@@ -58,7 +59,7 @@ function NumberRows(idsorttable, intTDMinCount)
 		var thesechildren=thistr.childNodes;
 		//console.log(thesechildren);
 		var tdcount=0;
-		var strDirection="";
+		strDirection="";
 		var bwlSubsidiary=false;
 		var  bwlSortAvoid=false;
 		
@@ -148,7 +149,7 @@ function redoLastSort(tableId) {
 	if(!tableId) {
 		tableId = lastSort[0];
 	}
-	console.log(tableId, lastSort[1], lastSort[2]);
+	//console.log(tableId, lastSort[1], lastSort[2]);
 	SortTable(tableId, lastSort[1], lastSort[2], lastSort[3]);
 }
  

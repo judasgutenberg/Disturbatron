@@ -60,12 +60,7 @@ for($i=0; $i<count($files); $i++) {
 }
 $out .= "</table>\n";
 */
-//if we do things in javascript;
-$out .= "<div><div style='display:inline-block'><h4>Pick a file to play:</h4></div><div style='display:inline-block;margin-left:80px'>"  . $killLink . "</div></div>";
-$out .= "<div id='dataTable'></div>";
-$out .= "\n<script>\npopulateDataTable();\n</script>";
-//$out .= "\n<script>\nNumberRows('sounds', 2);\n</script>";
-$out .= $killLink;
+ 
 
 ?>
 <!DOCTYPE html>
@@ -116,14 +111,26 @@ window.onload = function init() {
 	<script src="recorder.js"></script>
 	<script src="tablesort_js.js"></script>
 	<link rel="stylesheet" href='stylesheet.css'/>
-	<div id='newName'  class='renamePopup'>
-	<h3>Rename File: </h3>
-	Old file name: <input disabled id='oldFileName' size='40'><br/>
-	New file name:  <input id='newFileName' size='40'><br/>
-	<button onclick='saveFileName()' type='button'>Rename</button>
-	<button onclick='saveFileName(true)' type='button'>Cancel</button>
+		<div id='newName'  class='renamePopup'>
+		<h3>Rename File: </h3>
+		Old file name: <input disabled id='oldFileName' size='40'><br/>
+		New file name:  <input id='newFileName' size='40'><br/>
+		<button onclick='saveFileName()' type='button'>Rename</button>
+		<button onclick='saveFileName(true)' type='button'>Cancel</button>
 	</div>
 	<?php echo $out ?>
-	<iframe name='audio' width=0 height=0></iframe>
+	
+	<div><
+		div style='display:inline-block'>
+		<h4>Pick a file to play:</h4>
+	</div>
+	<div style='display:inline-block;margin-left:80px'>
+		<?php echo $killLink;?>
+	</div>
+	<div id='dataTable'></div>
+	<script>populateDataTable();</script>
+	<script>NumberRows('sounds', 2);</script>
+	<?php echo $killLink;?>
+	<iframe name='audio' width=0 height=0 style='display:none'></iframe>
 </body>
 </html>
