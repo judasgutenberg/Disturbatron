@@ -71,6 +71,8 @@ function createDownloadLink() {
 		//i found the base64data was corrupted at the server because '+' had been converted to ' ' and '/' may have also been corrupted
 		//so i've replaced those with ^ and ~, which don't get changed.  they are changed back on the server before the base64data is unencoded
 		oReq.send("blob=" + base64data.split('/').join('~').split('+').join('^'));
+		//this will only show a change if we happen to be in the audio/Custom directory
+		populateDataTable(currentDir);
 	}
    });
 }
@@ -191,6 +193,7 @@ function populateDataTable(dir) {
 			if(parentArray.length > 0) {
 				allowUpNav = true;
 			}
+			out += fileSystemBreadcrumb(dir);
 			out += "<table class='resultsTable' id='" + tableId + "'>\n";
 			out += "<thead><tr><th ><a href='javascript: SortTable(\"" + tableId + "\", 0)'>file</a></th><th>play</th><th>test</th><th><a href='javascript: SortTable(\"" + tableId + "\", 3)'>modified</a></th><th><a href='javascript: SortTable(\"" + tableId + "\", 4)'>size</a></th><th>tasks</th></tr></thead>\n";
 			 
@@ -227,4 +230,20 @@ function populateDataTable(dir) {
 	let url = "play.php?mode=browse&path=" + dir;
 	xmlhttp.open("GET", url, true);
 	xmlhttp.send(); 
+}
+
+function fileSystemBreadcrumb(dir) {
+	let arrDir = dir.split("/");
+	let out = ''; 
+	currentDir = '';
+	for(let i=0; i < arrDir.length; i++) {
+		let dirPiece = arrDir[i];
+		currentDir += dirPiece;
+	 	out += "<a href='javascript: populateDataTable(\"" + currentDir + "\")'>" + dirPiece + "</a>";
+		if(i < arrDir.length-1) {
+			out += " : ";
+			currentDir +=  "/";
+		}
+	}
+	return out;
 }
