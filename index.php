@@ -11,7 +11,29 @@ $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width=
 <!DOCTYPE html>
 <html>
 <head>
- 
+	<script>
+		window.onload = function init() {
+			try {
+			  // webkit shim
+			  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+			  navigator.getUserMedia = ( navigator.getUserMedia ||  navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+			  window.URL = window.URL || window.webkitURL;
+			  audio_context = new AudioContext;
+			  __log('Audio context set up.');
+			  __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+			} catch (e) {
+			  alert('No web audio support in this browser!');
+			}
+			
+			navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
+			  __log('No live audio input: ' + e);
+			});
+		};
+	</script>
+	<script src="disturbatron.js"></script>
+	<script src="recorder.js"></script>
+	<script src="tablesort_js.js"></script>
+	<link rel="stylesheet" href='stylesheet.css'/>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Disturbatron 2019</title>
 </head>
@@ -24,35 +46,8 @@ $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width=
   <h4>Log</h4>
   <pre id="log"></pre>
  </div>
-<script>
-window.onload = function init() {
-	try {
-	  // webkit shim
-	  window.AudioContext = window.AudioContext || window.webkitAudioContext;
-	  navigator.getUserMedia = ( navigator.getUserMedia ||
-	                   navigator.webkitGetUserMedia ||
-	                   navigator.mozGetUserMedia ||
-	                   navigator.msGetUserMedia);
-		   
-	  window.URL = window.URL || window.webkitURL;
-	  audio_context = new AudioContext;
-	  __log('Audio context set up.');
-	  __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
-	} catch (e) {
-	  alert('No web audio support in this browser!');
-	}
-	
-	navigator.getUserMedia({audio: true}, startUserMedia, function(e) {
-	  __log('No live audio input: ' + e);
-	});
-};
-</script>
-<script src="disturbatron.js"></script>
 <body>
 	<h2 class='title'>Audio Disturbatron 2019</h2>
-	<script src="recorder.js"></script>
-	<script src="tablesort_js.js"></script>
-	<link rel="stylesheet" href='stylesheet.css'/>
 		<div id='newName'  class='renamePopup'>
 		<h3>Rename File: </h3>
 		Old file name: <input disabled id='oldFileName' size='40'><br/>
