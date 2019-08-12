@@ -8,6 +8,8 @@ This system conserves power by using a relay (controlled by the Python scripts) 
 
 The web page is a simple LAMP-stack directory browser showing any files in the audio directory.  This directory can include other directoriesfor organization purposes.  Clicking the megaphone plays the audio on the remote Raspberry Pi whereas clicking the headphones playes it only on the client device.  New audio can be recorded if this system is implemented via https (due to annoying Google Chrome restrictions).
 
+This code is written without any frameworks, so anyone interested in the basics of building a website that is a frontend interacting with a file system (not, in this case, a database) may find this code illuminating.
+
 Not included here are a number of cron jobs designed to clean up various messes that can result when the megaphone relay is turned on but then not turned off.  I couldn't figure out a better way to kill playing audio than just restarting apache, though of course this causes messes as well (which those cron jobs are designed to clean up). 
 
 At some point I will include some hardware notes.
