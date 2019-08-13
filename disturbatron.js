@@ -31,11 +31,11 @@ function stopRecording(button) {
   button.previousElementSibling.disabled = false;
   __log('Stopped recording.');
   // create WAV download link using audio data blob
-  createDownloadLink();
+  createDownloadLink(currentDir); //currentDir is a global
   recorder.clear();
 }
 
-function createDownloadLink() {
+function createDownloadLink(dir) {
 	recorder && recorder.exportWAV(function(blob) {
 	var url = URL.createObjectURL(blob);
 	var li = document.createElement('li');
@@ -52,7 +52,7 @@ function createDownloadLink() {
 	recordingslist.appendChild(li);
 	
 	var oReq = new XMLHttpRequest();
-	var ajaxUrl = "play.php?file=" + encodeURI(hf.download);
+	var ajaxUrl = "play.php?file=" + encodeURI(hf.download) + "&dir=" + encodeURI(dir);
 	oReq.open("POST", ajaxUrl, true);
 	oReq.onload = function (oEvent) {
 	 // Uploaded.
