@@ -97,7 +97,7 @@ if($file!="" && !$blob && !$mode) {
 
 if($blob && $file  && !$mode) {
 	//$dir="audio/Custom/";//default
-	$dir = $_REQUEST["dir"]);
+	$dir = $_REQUEST["dir"];
 	file_put_contents($dir . '/' . $file, $blob);
 	echo '{"message":"uploaded"}';
 } else {
