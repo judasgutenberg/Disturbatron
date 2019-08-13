@@ -52,6 +52,22 @@ body
 	padding:10px
 }
 
+
+.newDirectory
+{
+	display:none;
+	position:fixed;
+	top:100px;
+	right:200px;
+	background-color:#ddddff;
+	border-style: solid;
+	border-color:#999999;
+	width:360px;
+	height:100px;
+	z-index:210;
+	padding:10px
+}
+
 .resultsTable td
 {
 	padding:3px;

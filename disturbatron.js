@@ -94,8 +94,6 @@ function saveFileName(justCloseWindow) {
 		newNameDiv.style.display = 'none';
 		return;
 	}
-	//alert("not yet implemented");
-	//return
   	var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -105,6 +103,32 @@ function saveFileName(justCloseWindow) {
         }
 	};
 	let url = "play.php?mode=renameFile&file=" + encodeURI(oldFileName) + "&newFileName=" + encodeURI(newFileName);
+	console.log(url);
+  	xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
+
+function createDirectory() {
+	let newDirectory = document.getElementById('newDirectory');
+	newDirectory.style.display = 'block';
+}
+
+function saveDirectory(justCloseWindow) {
+	let newDirectory = document.getElementById('newDirectory');
+	let directoryName =  document.getElementById('directoryName').value;
+	if(justCloseWindow) {
+		newDirectory.style.display = 'none';
+		return;
+	}
+  	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			newDirectory.style.display = 'none';
+            //window.location.reload();
+			populateDataTable(currentDir);
+        }
+	};
+	let url = "play.php?mode=saveDirectory&directoryName=" + encodeURI(directoryName) + "&path=" + encodeURI(currentDir);
 	console.log(url);
   	xmlhttp.open("GET", url, true);
     xmlhttp.send();
@@ -203,6 +227,7 @@ function populateDataTable(dir) {
 			if(allowUpNav) {
 				out += "<tr  name='sortavoid'><td colspan='6'><a href='" + directoryUrl + "'><img src='images/up.png' width='" + iconWidth + "'/></a></td></tr>\n"; 
 			}
+			out += "<tr  name='sortavoid'><td colspan='6'><a href='javascript: createDirectory()'>Create Directory</a></td></tr>\n";
 			for(let record of data.files) {
 				//console.log(index);
 				let filename = record['name'];

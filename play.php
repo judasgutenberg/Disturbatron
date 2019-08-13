@@ -35,6 +35,13 @@ if($_REQUEST && $_REQUEST["mode"]) {
 	} else if($mode=="deleteFile") { 
 		unlink($file);
 		echo '{"message":"file deleted"}';
+		die();
+	} else if($mode=="saveDirectory") { 
+		$newDir = $_REQUEST["directoryName"];
+		$path = $_REQUEST["path"];
+		mkdir($path . "/" . $newDir);
+		echo '{"message":"file created:' . $path . "/" . $newDir . '"}';
+		die();
 	} else if ($mode=="renameFile") {
 		
 		//play.php?mode=renameFile&file=" + encodeURI(filename) + "&newFileName=" + encodeURI(newFileName);

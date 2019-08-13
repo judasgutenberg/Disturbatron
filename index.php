@@ -48,7 +48,14 @@ $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width=
  </div>
 <body>
 	<h2 class='title'>Audio Disturbatron 2019</h2>
-		<div id='newName'  class='renamePopup'>
+	<div id='newDirectory'  class='newDirectory'>
+		<h3>New Directory: </h3>
+		Directory Name: <input id='directoryName' size='40'><br/>
+	 
+		<button onclick='saveDirectory()' type='button'>Create</button>
+		<button onclick='saveDirectory(true)' type='button'>Cancel</button>
+	</div>
+	<div id='newName'  class='renamePopup'>
 		<h3>Rename File: </h3>
 		Old file name: <input disabled id='oldFileName' size='40'><br/>
 		New file name:  <input id='newFileName' size='40'><br/>
