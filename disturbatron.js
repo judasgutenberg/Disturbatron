@@ -55,6 +55,8 @@ function createDownloadLink(dir) {
 	var ajaxUrl = "play.php?file=" + encodeURI(hf.download) + "&dir=" + encodeURI(dir);
 	oReq.open("POST", ajaxUrl, true);
 	oReq.onload = function (oEvent) {
+		//console.log(currentDir);
+		populateDataTable(currentDir);
 	 // Uploaded.
 	 //alert('woot');
 	};
@@ -72,7 +74,7 @@ function createDownloadLink(dir) {
 		//so i've replaced those with ^ and ~, which don't get changed.  they are changed back on the server before the base64data is unencoded
 		oReq.send("blob=" + base64data.split('/').join('~').split('+').join('^'));
 		//this will only show a change if we happen to be in the audio/Custom directory
-		populateDataTable(currentDir);
+
 	}
    });
 }
