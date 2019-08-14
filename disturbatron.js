@@ -56,7 +56,7 @@ function createDownloadLink(dir) {
 	oReq.open("POST", ajaxUrl, true);
 	oReq.onload = function (oEvent) {
 		//console.log(currentDir);
-		populateDataTable(currentDir);
+		populateDataTable(dir);
 	 // Uploaded.
 	 //alert('woot');
 	};
