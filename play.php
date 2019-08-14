@@ -33,8 +33,18 @@ if($_REQUEST && $_REQUEST["mode"]) {
 		passthru($command);
 		echo '{"message":"sound killed"}';
 	} else if($mode=="deleteFile") { 
-		unlink($file);
-		echo '{"message":"file deleted"}';
+		if(is_file($fullPath)) {
+			unlink($file);
+			echo '{"message":"file deleted"}';
+		} else {
+			$out = rmdir($file);
+			if($out) {
+				echo '{"message":"directory deleted"}';
+			} else {
+				echo '{"error":"directory not deleted. Is it empty?"}';
+			}
+		}
+		
 		die();
 	} else if($mode=="saveDirectory") { 
 		$newDir = $_REQUEST["directoryName"];
