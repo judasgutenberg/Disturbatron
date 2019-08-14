@@ -219,15 +219,23 @@ function populateDataTable(dir) {
 			if(parentArray.length > 0) {
 				allowUpNav = true;
 			}
+			out += "<div style='display:inline-block'>";
+			if(allowUpNav) {
+				let directoryUrl = "javascript: populateDataTable(\"" + encodeURI(parentPath) + "\")";
+				out += "<a href='" + directoryUrl + "'><img src='images/up.png' width='" + iconWidth + "' style='margin-right:10px'/></a>";
+			}
 			out += fileSystemBreadcrumb(dir);
+			out += "</div>";
+			out += "<div style='display:inline-block;margin-left:20px;'>";
+			out += "<button onclick='createDirectory()'>Create directory here</button>";
+			out += "</div>";
 			out += "<table class='resultsTable' id='" + tableId + "'>\n";
 			out += "<thead><tr><th ><a href='javascript: SortTable(\"" + tableId + "\", 0)'>file</a></th><th>play</th><th>test</th><th><a href='javascript: SortTable(\"" + tableId + "\", 3)'>modified</a></th><th><a href='javascript: SortTable(\"" + tableId + "\", 4)'>size</a></th><th>tasks</th></tr></thead>\n";
-			 
-			let directoryUrl = "javascript: populateDataTable(\"" + encodeURI(parentPath) + "\")";
+			
 			if(allowUpNav) {
-				out += "<tr  name='sortavoid'><td colspan='6'><a href='" + directoryUrl + "'><img src='images/up.png' width='" + iconWidth + "'/></a></td></tr>\n"; 
+				//out += "<tr  name='sortavoid'><td colspan='6'><a href='" + directoryUrl + "'><img src='images/up.png' width='" + iconWidth + "'/></a></td></tr>\n"; 
 			}
-			out += "<tr  name='sortavoid'><td colspan='6'><a href='javascript: createDirectory()'>Create Directory</a></td></tr>\n";
+			//out += "<tr  name='sortavoid'><td colspan='6'><a href='javascript: createDirectory()'>Create Directory</a></td></tr>\n";
 			for(let record of data.files) {
 				//console.log(index);
 				let filename = record['name'];
