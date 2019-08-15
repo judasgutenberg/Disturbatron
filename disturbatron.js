@@ -82,7 +82,7 @@ function createDownloadLink(dir) {
 function renameFile(filename) {
 	let newNameDiv = document.getElementById('newName');
 	document.getElementById('oldFileName').value = filename;
-	document.getElementById('newFileName').value = filename;
+	document.getElementById('newFileName').value = getFilenameFromPath(filename);
 	newNameDiv.style.display = 'block';
 }
 	
@@ -281,4 +281,15 @@ function fileSystemBreadcrumb(dir) {
 		}
 	}
 	return out;
+}
+
+function getFilenameFromPath(path) {
+	let newFileNameArray =  path.split("/");
+	let fileName = newFileNameArray[newFileNameArray.length-1];
+	if(fileName.indexOf('.')>-1) {
+		let fileNameArray = fileName.split(".");
+		fileNameArray.pop();
+		fileName = fileNameArray.join(".");
+	}
+	return fileName;
 }

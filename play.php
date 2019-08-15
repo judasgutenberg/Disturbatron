@@ -1,3 +1,4 @@
+
 <?php 
 //speakerbot backend. this plays audio via a python script on the server (usually something like a raspberry pi)
 //i've tried to keep all the code vanilla and old school
@@ -56,16 +57,25 @@ if($_REQUEST && $_REQUEST["mode"]) {
 		
 		//play.php?mode=renameFile&file=" + encodeURI(filename) + "&newFileName=" + encodeURI(newFileName);
 		$extensionArray = explode(".", $file);
-		$extension = $extensionArray[count($extensionArray)-1];
 		$newFileName = $_REQUEST["newFileName"];
 		$newFileNameArray = explode("/", $file);
-		$newFileNameArray[count($newFileNameArray)-1] = $newFileName . "." . $extension;
-		//this would be for boneheads who don't include the path or extension when they rename:
-		//$newFileName = join("/", $newFileNameArray);
 		
+		if(count($extensionArray) > 1) {
+			$extension = "." . $extensionArray[count($extensionArray)-1];
+		} else {
+			$extension = '';
+		}
+		
+		$newFileNameArray[count($newFileNameArray)-1] = $newFileName . $extension;
+		//this would be for boneheads who don't include the path or extension when they rename:
+		$newFileName = join("/", $newFileNameArray);
+		//okay, i am a bonehead
 		$out = rename($file, $newFileName);
 		//echo("DDD") + $out;
-		echo '{"message":"file renamed"}';
+ 
+ 
+		echo '{"message":"file renamed: ' . $newFileName . '}';
+		die();
 	} else if ($mode=='browse') { //in case i want to do directory browsing via AJAX
 		$path = "";
 		if($_REQUEST && $_REQUEST["path"]) {
@@ -120,3 +130,4 @@ if($blob && $file  && !$mode) {
 } else {
 	echo '{"message":"done"}';
 }
+ 
