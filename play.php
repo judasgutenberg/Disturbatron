@@ -33,8 +33,9 @@ if($_REQUEST && $_REQUEST["mode"]) {
 		$command = escapeshellcmd('sudo service apache2 restart');
 		passthru($command);
 		echo '{"message":"sound killed"}';
+		exit;
 	} else if($mode=="deleteFile") { 
-		if(is_file($file)) {
+		if(is_file($fullPath)) {
 			unlink($file);
 			echo '{"message":"file deleted"}';
 		} else {
@@ -52,7 +53,7 @@ if($_REQUEST && $_REQUEST["mode"]) {
 		$path = $_REQUEST["path"];
 		mkdir($path . "/" . $newDir);
 		echo '{"message":"file created:' . $path . "/" . $newDir . '"}';
-		die();
+		exit;
 	} else if ($mode=="renameFile") {
 		
 		//play.php?mode=renameFile&file=" + encodeURI(filename) + "&newFileName=" + encodeURI(newFileName);
@@ -75,7 +76,7 @@ if($_REQUEST && $_REQUEST["mode"]) {
  
  
 		echo '{"message":"file renamed: ' . $newFileName . '}';
-		die();
+		exit;
 	} else if ($mode=='browse') { //in case i want to do directory browsing via AJAX
 		$path = "";
 		if($_REQUEST && $_REQUEST["path"]) {
