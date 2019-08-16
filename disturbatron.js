@@ -74,11 +74,40 @@ function createDownloadLink(dir) {
 		//so i've replaced those with ^ and ~, which don't get changed.  they are changed back on the server before the base64data is unencoded
 		oReq.send("blob=" + base64data.split('/').join('~').split('+').join('^'));
 		//this will only show a change if we happen to be in the audio/Custom directory
-
 	}
    });
 }
   
+  
+ function moveFile(filename) {
+	let moveFileDiv = document.getElementById('moveFile');
+	document.getElementById('oldLocation').value = currentDir;
+	document.getElementById('newLocation').value = currentDir;
+	moveFileDiv.style.display = 'block';
+}
+
+function saveLocation(justCloseWindow) {
+	let moveFileDiv = document.getElementById('moveFile');
+	let oldLocation =  document.getElementById('oldLocation').value;
+	let newLocation = document.getElementById('newLocation').value;
+	if(justCloseWindow) {
+		moveFileDiv.style.display = 'none';
+		return;
+	}
+  	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			moveFileDiv.style.display = 'none';
+            //window.location.reload();
+			populateDataTable(currentDir);
+        }
+	};
+	let url = "play.php?mode=moveFile&file=" + encodeURI(oldFileName) + "&newFileName=" + encodeURI(newFileName);
+	console.log(url);
+  	xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+}
+
 function renameFile(filename) {
 	let newNameDiv = document.getElementById('newName');
 	document.getElementById('oldFileName').value = filename;
@@ -244,7 +273,9 @@ function populateDataTable(dir) {
 				let tasks = '';
 				//console.log(fullPath);
 				if(filename != "." && filename != "..") {
-			 		tasks = "<a href='javascript:renameFile(\"" + fullPath + "\")'>rename</a> <a href='javascript:deleteFile(\"" + fullPath + "\")'>delete</a>";
+			 		tasks = "<a href='javascript:renameFile(\"" + fullPath + "\")'>rename</a> ";
+					tasks += "<a href='javascript:deleteFile(\"" + fullPath + "\")'>delete</a> ";
+					tasks += "<a href='javascript:moveFile(\"" + fullPath + "\")'>move</a>";
 					if(!record['directory']) {
 			 			out +=  "<tr><td><img src='images/file.png' width='" + iconWidth + "' style='margin-right:10px'/>" + filename + "</td><td><a href='javascript: serverPlay(\"" +  fullPath + "\")'><img src='images/megaphone.png' width='" + iconWidth + "'/></a></td><td><a href='javascript: serverPlay(\"" +   fullPath  + "\")'><a target=audio href='" + fullPath + "'><img src='images/headphone.png' width='" + iconWidth + "'/></a></td><td>" +  record['modified'] + "</td><td class='numericColumn'>" + size + "</td><td>" + tasks + "</td></tr>\n"; 
 					} else {

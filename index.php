@@ -62,6 +62,13 @@ $killLink = "<a href='javascript: killAudio()'><img src='images/stop.png' width=
 		<button onclick='saveFileName()' type='button'>Rename</button>
 		<button onclick='saveFileName(true)' type='button'>Cancel</button>
 	</div>
+	<div id='moveFile'  class='renamePopup'>
+		<h3>Move File: </h3>
+		Old location: <input disabled id='oldLocation' size='40'><br/>
+		New location:  <input id='newLocation' size='40'><br/>
+		<button onclick='saveLocation()' type='button'>Move</button>
+		<button onclick='saveLocation(true)' type='button'>Cancel</button>
+	</div>
 	<div>
 		<div style='display:inline-block'>
 			<h4>Pick a file to play:</h4>
