@@ -34,7 +34,7 @@ if($_REQUEST && $_REQUEST["mode"]) {
 		passthru($command);
 		echo '{"message":"sound killed"}';
 	} else if($mode=="deleteFile") { 
-		if(is_file($fullPath)) {
+		if(is_file($file)) {
 			unlink($file);
 			echo '{"message":"file deleted"}';
 		} else {
