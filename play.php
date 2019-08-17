@@ -103,7 +103,7 @@ if($_REQUEST && $_REQUEST["mode"]) {
 		for($i=0; $i<count($files); $i++) {
 			$file = $files[$i];
 			$fullPath = $dir . "/" . $file;
-			$fileArray[count($fileArray)] = array("name"=>$file, "modified"=>date ("Y-m-d H:i:s.", filemtime($fullPath)), "size"=>filesize($fullPath), "directory"=>!is_file($fullPath), "path"=>$fullPath);
+			$fileArray[count($fileArray)] = array("name"=>$file, "modified"=>date ("Y-m-d H:i:s", filemtime($fullPath)), "size"=>filesize($fullPath), "directory"=>!is_file($fullPath), "path"=>$fullPath);
 		
 		}
 		$parentPath = join("/", array_pop(explode("/", $dir)));
