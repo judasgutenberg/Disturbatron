@@ -19,3 +19,5 @@ Things that would be useful in a future version:
 1. Analog-to-digital converter to monitor battery power and solar power.
 
 2. Relay to turn off WiFi at night or in certain ranges of hours.
+
+3. Possibly add some kind of audio digitizer, allowing for use as a remote walkie talkie.
