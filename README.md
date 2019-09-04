@@ -14,10 +14,9 @@ Not included here are a number of cron jobs designed to clean up various messes 
 
 At some point I will include some hardware notes.
 
-Things that would be useful in a future version:
+Hardware Notes: 
+GPIO #24 controls the relay powering the megaphone.
+GPIO #23 controls the relay powering the WiFi dongle.
 
-1. Analog-to-digital converter to monitor battery power and solar power.
-
-2. Relay to turn off WiFi at night or in certain ranges of hours.
-
-3. Possibly add some kind of audio digitizer, allowing for use as a remote walkie talkie.
+Audio is from a resistor-capacitor mid-pass filter attached to GPIO #13 (which can do PWM). Only one audio channel is needed.
+A0 on an ads1115 reads the voltage of the lead-acid battery. 
