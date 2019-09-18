@@ -20,3 +20,5 @@ GPIO #23 controls the relay powering the WiFi dongle.
 
 Audio is from a resistor-capacitor mid-pass filter attached to GPIO #13 (which can do PWM). Only one audio channel is needed.
 A0 on an ads1115 reads the voltage of the lead-acid battery. 
+
+TODO: make a variant that works with LoRa, probably controlled by a special-purpose app similar to the website currently being used.
