@@ -21,4 +21,6 @@ GPIO #23 controls the relay powering the WiFi dongle.
 Audio is from a resistor-capacitor mid-pass filter attached to GPIO #13 (which can do PWM). Only one audio channel is needed.
 A0 on an ads1115 reads the voltage of the lead-acid battery through a two-resistor voltage divider that reduces the voltage by about 90% so that it falls within the voltage range of the ads1115.
 
+I'm finding the solar panel is not enough to recharge the 12v battery with diminished October sunshine.
+
 TODO: make a variant that works with LoRa, probably controlled by a special-purpose app similar to the website currently being used.  But LoRa is really hard to use.  433 MHz seems ideal.
