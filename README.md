@@ -23,4 +23,4 @@ A0 on an ads1115 reads the voltage of the lead-acid battery through a two-resist
 
 I'm finding the solar panel is not enough to recharge the 12v battery with diminished October sunshine.
 
-TODO: make a variant that works with LoRa, probably controlled by a special-purpose app similar to the website currently being used.  But LoRa is really hard to use.  433 MHz seems ideal.
+TODO: make a variant that works with LoRa, probably controlled by a special-purpose app similar to the website currently being used.  But LoRa is really hard to use.  433 MHz seems ideal since its lower frequency should get through forests better than 912 MHz.
