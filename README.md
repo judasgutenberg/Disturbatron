@@ -26,3 +26,5 @@ I'm finding the solar panel is not enough to recharge the 12v battery with dimin
 TODO: make a variant that works with LoRa, probably controlled by a special-purpose app similar to the website currently being used.  But LoRa is really hard to use.  433 MHz seems ideal since its lower frequency should get through forests better than 912 MHz.
 
 Update: after October 1, it's hard to keep a 12 volt battery charged with a 30 watt solar panel that is powering a continuously-running Raspberry Pi.
+
+Oh I see what you did there, GitHub. The yellow color coding happened because of the Halloweens.
