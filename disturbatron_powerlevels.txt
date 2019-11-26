@@ -3,3 +3,5 @@
 12.2 v: 10616
 12.6 v: 11060
 11.4 v: 9900
+
+Full sunlight with almost no battery charge:  10970
