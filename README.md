@@ -1,5 +1,5 @@
 # disturbatron
-LAMP-stack Raspberry Pi project with a web page showing uploaded audio files that can be played (via Python script) through a megaphone attached to the Raspberry Pi
+A LAMP-stack Raspberry Pi project with a web page showing uploaded audio files that can be played (via Python script) through a megaphone attached to the Raspberry Pi
 
 
 The idea is to be able to solar-power the Raspberry Pi in a remote location and use a Yagi antenna to stay in contact with your WiFi router.  Then you can safely hassle people (such as hillfolk monotonously shooting at trees in the forest) via a megaphone from anywhere in the world.  Combined with camera surveillance, you would even be able to see who you were hassling. 
