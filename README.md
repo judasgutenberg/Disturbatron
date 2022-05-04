@@ -14,7 +14,7 @@ Not included here are a number of cron jobs designed to clean up various messes 
 
 At some point I will include some hardware notes.
 
-Hardware Notes: 
+# Hardware Notes: 
 GPIO #24 controls the relay powering the megaphone.
 GPIO #23 controls the relay powering the WiFi dongle.
 
