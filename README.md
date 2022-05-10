@@ -13,7 +13,6 @@ Here's what the web-based UI looks like as served from the Raspberry Pi:
 ![alt text](ui.png?raw=true)
 
 
-
 This code is written without JQuery or any frameworks, so anyone interested in the basics of building a simplest-possible website that is a frontend interacting with a file system (not, in this case, a database) may find this code illuminating.
 
 Not included here are a number of cron jobs designed to clean up various messes that can result when the megaphone relay is turned on but then not turned off.  I couldn't figure out a better way to kill playing audio than just restarting apache, though of course this causes messes as well (which those cron jobs are designed to clean up). 
