@@ -17,8 +17,6 @@ This code is written without JQuery or any frameworks, so anyone interested in t
 
 Not included here are a number of cron jobs designed to clean up various messes that can result when the megaphone relay is turned on but then not turned off.  I couldn't figure out a better way to kill playing audio than just restarting apache, though of course this causes messes as well (which those cron jobs are designed to clean up). 
 
-
-
 # Hardware Notes: 
 GPIO #24 controls the relay powering the megaphone.
 GPIO #23 controls the relay powering the WiFi dongle.
@@ -40,6 +38,6 @@ Here's a schematic diagram:
 
 
 
-Here's a photo of the Raspberry Pi Zero inside my Disturbatron (sorry, it's out of focus!).
+Here's a photo of the Raspberry Pi Zero inside my Disturbatron (sorry, it's a little out of focus!).
 
 ![alt text](disturbatron_pins.jpg?raw=true)
