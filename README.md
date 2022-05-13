@@ -1,5 +1,5 @@
 # disturbatron
-A LAMP-stack Raspberry Pi project with a web page showing uploaded audio files that can be played (via Python script) through a megaphone attached to the Raspberry Pi
+A LAMP-stack Raspberry Pi project with a web page showing uploaded audio files that can be played (via Python script) through a megaphone attached to the Raspberry Pi.
 
 
 The idea is to be able to solar-power the Raspberry Pi in a remote location and use a Yagi antenna to stay in contact with your WiFi router.  Then you can safely hassle people (such as hillfolk monotonously shooting at trees in the forest) via a megaphone from anywhere in the world.  Combined with camera surveillance, you would even be able to see who you were hassling. 
@@ -20,7 +20,7 @@ Not included here are a number of cron jobs designed to clean up various messes 
 # Hardware Notes: 
 GPIO #24 controls the relay powering the megaphone.
 GPIO #23 controls the relay powering the WiFi dongle.
-These two things use a lot of power and it's best to turn them off if the Disburaton isn' making sounds or is in hours when it won't need to communicate.
+These two things use a lot of power and it's best to turn them off if the Disburaton isn't making sounds or is in hours when it won't need to communicate.
 
 Audio is from a resistor-capacitor mid-pass filter attached to GPIO #13 (which can do PWM). Only one audio channel is needed.
 A0 on an ads1115 reads the voltage of the lead-acid battery through a two-resistor voltage divider that reduces the voltage by about 90% so that it falls within the voltage range of the ads1115.
