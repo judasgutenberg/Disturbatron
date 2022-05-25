@@ -38,6 +38,6 @@ Here's a schematic diagram:
 
 
 
-Here's a photo of the Raspberry Pi Zero inside my Disturbatron (sorry, it's a little out of focus!).
+Here's a photo of the Raspberry Pi Zero inside my Disturbatron.
 
 ![alt text](disturbatron_pins.jpg?raw=true)
