@@ -8,7 +8,7 @@ This system conserves power by using a relay (controlled by the Python scripts) 
 
 The web page is a simple LAMP-stack directory browser showing any files in the audio directory.  This directory can include other directories for organizational purposes.  Clicking the megaphone plays the audio on whatever audio equipment is attached to the remote Raspberry Pi, whereas clicking the headphones playes it only on the client device.  New audio can be recorded if this system is implemented via https (due to annoying Google Chrome restrictions).
 
-Here's what the web-based UI looks like as served from the Raspberry Pi:
+Here's what the web-based UI looks like as served from the Apache web server running on the Raspberry Pi:
 
 ![alt text](ui.png?raw=true)
 
