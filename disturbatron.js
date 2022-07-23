@@ -1,3 +1,4 @@
+//i forget where i got this, but this isn't code i came up witb
 var audio_context;
 var recorder;
 var currentDir;
