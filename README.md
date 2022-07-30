@@ -31,7 +31,7 @@ TODO: make a variant that works with LoRa, probably controlled by a special-purp
 
 Update: after October 1, it's hard to keep a 12 volt battery charged with a 30 watt solar panel that is powering a continuously-running Raspberry Pi.
 
-The Disturbatron is reliable laugh-getter when demonstrated to friends or even inlaws, though your spouse will eventually get annoyed.
+The Disturbatron is reliable laugh-getter when demonstrated to friends or even inlaws, though your spouse or parents will eventually get annoyed.
 
 Here's a schematic diagram:
 ![alt text](disturbatrondiagram.png?raw=true)
