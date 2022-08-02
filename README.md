@@ -2,7 +2,7 @@
 A LAMP-stack Raspberry Pi project with a web app (served by the Raspberry Pi itself) showing uploaded audio files (in the file system of the Raspberry Pi) that can be played (via Python script) through a megaphone (or some other device) attached to the Raspberry Pi.
 
 
-The idea is to be able to solar-power the Raspberry Pi in a remote location and use something like a parabolic or Yagi antenna to stay in contact with your WiFi router.  Then you can safely hassle people (such as hillfolk monotonously shooting at trees in the forest) via a megaphone from anywhere in the world.  Combined with camera surveillance, you would even be able to see who you were hassling. 
+The idea is to be able to solar-power the Raspberry Pi in a remote location and use something like a parabolic or Yagi antenna to stay in contact with your WiFi router.  Then you can safely hassle people (such as hillfolk monotonously shooting at trees in the forest) via a megaphone from anywhere in the world.  Combined with camera surveillance, you would even be able to see who you were disturbing. 
 
 This system conserves power by using a relay (controlled by the Python scripts) to turn on the megaphone and WiFi dongle only when needed.  I use a WiFi-free Raspberry Pi Zero instead of a WiFi-capable Raspberry Pi Zero W so I can use a better antenna and turn the dongle off when it's in sleep mode (for example, in the middle of the night as determined by the clock).
 
