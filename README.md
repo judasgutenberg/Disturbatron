@@ -25,7 +25,7 @@ These two things use a lot of power and it's best to turn them off if the Disbur
 Audio is from a resistor-capacitor mid-pass filter attached to GPIO #13 (which can do PWM). Only one audio channel is needed unless you somehow rig up two megaphones (todo: merge audio channels into mono during playback).
 A0 on an ads1115 reads the voltage of the lead-acid battery through a two-resistor voltage divider that reduces the voltage by about 90% so that it falls within the voltage range of the ads1115.
 
-I'm finding the solar panel is not enough to recharge the 12v battery with diminished October sunshine.
+Though my 15 watt panel with a lawn mower battery was fine for powering this device continuously through the summer, I'm finding the solar panel is not enough to recharge the 12v battery with diminished October sunshine.
 
 TODO: make a variant that works with LoRa, probably controlled by a special-purpose app similar to the web app in this repository.  But LoRa is proving tricky in my experiments with it.  433 MHz seems ideal since its lower frequency should get through forest vegetation better than 912 MHz.
 
