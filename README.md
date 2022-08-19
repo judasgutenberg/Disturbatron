@@ -33,12 +33,12 @@ Update: after October 1, it's hard to keep a 12 volt battery charged with a 30 w
 
 The Disturbatron is reliable laugh-getter when demonstrated to friends or even inlaws, though your spouse or parents will eventually get annoyed.
 
-Here's a schematic diagram:
+Here is a schematic diagram:
 ![alt text](disturbatrondiagram.png?raw=true)
 
 
 
-Here's a photo of the Raspberry Pi Zero inside the one Disturbatron known to be built.
+Here is a photo of the Raspberry Pi Zero inside the one Disturbatron known to be built.
 
 ![alt text](disturbatron_pins.jpg?raw=true)
 
