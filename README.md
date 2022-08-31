@@ -29,7 +29,7 @@ Though my 15 watt panel with a lawn mower battery was fine for powering this dev
 
 TODO: make a variant that works with LoRa, probably controlled by a special-purpose app similar to the web app in this repository.  But LoRa is proving tricky in my experiments with it.  433 MHz seems ideal since its lower frequency should get through forest vegetation better than 912 MHz.
 
-Update: after October 1, it's hard to keep a 12 volt battery charged with a 30 watt solar panel that is powering a continuously-running Raspberry Pi.
+Update: after about October 1, it's hard to keep a 12 volt battery charged with a 30 watt solar panel that is powering a continuously-running Raspberry Pi.
 
 The Disturbatron is reliable laugh-getter when demonstrated to friends or even inlaws, though your spouse or parents will eventually get annoyed.
 
