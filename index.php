@@ -1,6 +1,6 @@
 <?php 
 //speakerbot web page. this produces a list of audio files in the audio directory that can be sampled locally or played on the remote megaphone
-//i've tried to keep all the code vanilla and old school
+//i've tried to keep all the code vanilla and old school, particularly the javascript
 //gus mueller, july 12 2019
 //////////////////////////////////////////////////////////////
 //error_reporting(E_ALL);
