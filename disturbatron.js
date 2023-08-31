@@ -1,4 +1,4 @@
-//i forget where i got this, but this isn't code i came up witb
+//i forget where i got this, but the media control code isn't stuff i came up with
 var audio_context;
 var recorder;
 var currentDir;
