@@ -3,7 +3,7 @@ import os
 import RPi.GPIO as GPIO 		# import RPi.GPIO module 
 import sys
 GPIO.setmode(GPIO.BCM) 			# choose BCM or BOARD 
-GPIO.setup(23, GPIO.OUT) 		# set GPIO24 as an output
+GPIO.setup(23, GPIO.OUT) 		# set GPIO23 as an output
  
 try:  
 	GPIO.output(23, 0)
