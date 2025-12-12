@@ -1,4 +1,4 @@
-AZ# Disturbatron
+# Disturbatron
 A LAMP-stack Raspberry Pi project with a web app (served by the Raspberry Pi itself) showing uploaded audio files (in the file system of the Raspberry Pi) that can be played (via Python script) through a megaphone (or some other device) attached to the Raspberry Pi.
 
 
